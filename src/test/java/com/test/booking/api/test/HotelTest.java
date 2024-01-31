@@ -15,11 +15,21 @@ import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.equalTo;
 
+/**
+ * The type Hotel test.
+ */
 public class HotelTest {
+    /**
+     * The Log.
+     */
     Logger log = LogManager.getLogger(HotelTest.class);
     private HotelModel hotelRequest;
     private RoomModel roomModel;
-    private Faker faker = new Faker();
+    private final Faker faker = new Faker();
+
+    /**
+     * Prepare user.
+     */
     @BeforeTest
     public void prepareUser() {
 
@@ -35,6 +45,12 @@ public class HotelTest {
 
         roomModel.setRoomType(RoomType.DOUBLE);
     }
+
+    /**
+     * Create hotel.
+     *
+     * @param testContext the test context
+     */
     @Test(priority = 1)
     public void createHotel(ITestContext testContext){
         log.info("************ Create Hotel ************");
@@ -46,6 +62,11 @@ public class HotelTest {
         log.info("************ Created Successfully ************");
     }
 
+    /**
+     * Get hotel details.
+     *
+     * @param testContext the test context
+     */
     @Test(priority = 2, dependsOnMethods = "createHotel")
     public void getHotelDetails(ITestContext testContext){
         log.info("************ Get Hotel Details ************");
@@ -56,6 +77,11 @@ public class HotelTest {
         log.info("************ Get Details Successfully ************");
     }
 
+    /**
+     * Create room.
+     *
+     * @param testContext the test context
+     */
     @Test(priority = 3, dependsOnMethods = "createHotel")
     public void createRoom(ITestContext testContext){
         log.info("************ Create Room ************");
@@ -71,6 +97,11 @@ public class HotelTest {
         log.info("************ Room Created Successfully ************");
     }
 
+    /**
+     * Get room details.
+     *
+     * @param testContext the test context
+     */
     @Test(priority = 4, dependsOnMethods = "createRoom")
     public void getRoomDetails(ITestContext testContext){
         log.info("************ Get Room Details ************");
@@ -81,6 +112,11 @@ public class HotelTest {
         log.info("************ Get Room Details Successfully ************");
     }
 
+    /**
+     * Book room.
+     *
+     * @param testContext the test context
+     */
     @Test(priority = 5, dependsOnMethods = "getRoomDetails")
     public void bookRoom(ITestContext testContext){
         log.info("************ Get Room Details ************");
@@ -91,6 +127,11 @@ public class HotelTest {
         log.info("************ Get Room Details Successfully ************");
     }
 
+    /**
+     * Book same room again.
+     *
+     * @param testContext the test context
+     */
     @Test(priority = 5, dependsOnMethods = "getRoomDetails")
     public void bookSameRoomAgain(ITestContext testContext){
         log.info("************ Book Room Again ************");
@@ -101,6 +142,11 @@ public class HotelTest {
         log.info("************ Book Room Failed ************");
     }
 
+    /**
+     * Cancel booking.
+     *
+     * @param testContext the test context
+     */
     @Test(priority = 6, dependsOnMethods = "getRoomDetails")
     public void cancelBooking(ITestContext testContext){
         log.info("************ Get Room Details ************");
@@ -111,6 +157,11 @@ public class HotelTest {
         log.info("************ Get Room Details Successfully ************");
     }
 
+    /**
+     * Update room.
+     *
+     * @param testContext the test context
+     */
     @Test(priority = 7, dependsOnMethods = "getRoomDetails")
     public void updateRoom(ITestContext testContext){
         log.info("************ Get Room Details ************");

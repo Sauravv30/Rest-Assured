@@ -16,21 +16,37 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
 
+/**
+ * The type Booking test.
+ */
 public class BookingTest {
 
+    /**
+     * The Log.
+     */
     Logger log = LogManager.getLogger(BookingTest.class);
     private BookingModel bookingModel;
 
+    /**
+     * Prepare user.
+     *
+     * @param testContext the test context
+     */
     @BeforeTest
     public void prepareUser(ITestContext testContext) {
         bookingModel = new BookingModel();
         bookingModel.setUserId(Long.parseLong(testContext.getSuite().getAttribute("userId").toString()));
         bookingModel.setRoomId(Long.parseLong(testContext.getSuite().getAttribute("roomId").toString()));
-        bookingModel.setCheckInDate(LocalDate.of(2024, 02, 10).toString());
-        bookingModel.setCheckOutDate(LocalDate.of(2024, 02, 12).toString());
+        bookingModel.setCheckInDate(LocalDate.of(2024, 2, 10).toString());
+        bookingModel.setCheckOutDate(LocalDate.of(2024, 2, 12).toString());
         bookingModel.setBookingStatus("CONFIRM");
     }
 
+    /**
+     * Create booking.
+     *
+     * @param testContext the test context
+     */
     @Test(priority = 1)
     public void createBooking(ITestContext testContext) {
         log.info("************ Create Booking ************");
@@ -44,6 +60,11 @@ public class BookingTest {
         log.info("************ Booking Created Successfully ************");
     }
 
+    /**
+     * Gets booking details.
+     *
+     * @param testContext the test context
+     */
     @Test(priority = 2, dependsOnMethods = "createBooking")
     public void getBookingDetails(ITestContext testContext) {
         log.info("************ Get Booking ************");
@@ -56,6 +77,11 @@ public class BookingTest {
         log.info("************ Get Booking Successfully ************");
     }
 
+    /**
+     * Gets booking by user.
+     *
+     * @param testContext the test context
+     */
     @Test(priority = 3, dependsOnMethods = "createBooking")
     public void getBookingByUser(ITestContext testContext) {
         log.info("************ Get Booking By User ************");
@@ -68,7 +94,12 @@ public class BookingTest {
         log.info("************ Get Booking By User Successfully ************");
     }
 
-    //@Test(priority = 4, dependsOnMethods = "createBooking")
+    /**
+     * Cancel booking.
+     *
+     * @param testContext the test context
+     */
+//@Test(priority = 4, dependsOnMethods = "createBooking")
     public void cancelBooking(ITestContext testContext) {
         log.info("************ Cancel Booking By Id ************");
         Response response = BookingEndpoints.cancelBooking(Long.parseLong(testContext.getSuite().getAttribute("bookingId").toString()), testContext.getSuite().getAttribute("accessToken").toString());
@@ -78,11 +109,16 @@ public class BookingTest {
     }
 
 
+    /**
+     * Update booking.
+     *
+     * @param testContext the test context
+     */
     @Test(priority = 5, dependsOnMethods = "createBooking")
     public void updateBooking(ITestContext testContext) {
         log.info("************ Update Booking ************");
         bookingModel.setId(Long.parseLong(testContext.getSuite().getAttribute("bookingId").toString()));
-        bookingModel.setCheckOutDate(LocalDate.of(2024, 02, 15).toString());
+        bookingModel.setCheckOutDate(LocalDate.of(2024, 2, 15).toString());
         Response response = BookingEndpoints.updateBooking(bookingModel, bookingModel.getId(), testContext.getSuite().getAttribute("accessToken").toString());
         response.then().log().all();
         Assert.assertNotNull(response.getBody());

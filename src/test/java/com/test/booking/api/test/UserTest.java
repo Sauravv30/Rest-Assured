@@ -13,11 +13,20 @@ import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.equalTo;
 
+/**
+ * The type User test.
+ */
 public class UserTest {
+    /**
+     * The Log.
+     */
     Logger log = LogManager.getLogger(UserTest.class);
-    private UserModel userRequest;
-    private Faker faker = new Faker();
+    private final UserModel userRequest;
+    private final Faker faker = new Faker();
 
+    /**
+     * Prepare user.
+     */
     @BeforeTest
     public void prepareUser() {
 
@@ -29,6 +38,11 @@ public class UserTest {
         userRequest.setRole("User");
     }
 
+    /**
+     * Register user.
+     *
+     * @param testContext the test context
+     */
     @Test(priority = 1)
     public void registerUser(ITestContext testContext) {
         log.info("************ Register User ************");
@@ -40,6 +54,11 @@ public class UserTest {
         log.info("************ Register Success ************");
     }
 
+    /**
+     * Register user again.
+     *
+     * @param testContext the test context
+     */
     @Test(priority = 1)
     public void registerUserAgain(ITestContext testContext) {
         log.info("************ Register User Again ************");
@@ -50,6 +69,11 @@ public class UserTest {
         log.info("************ Register Again Failed ************");
     }
 
+    /**
+     * Login user.
+     *
+     * @param testContext the test context
+     */
     @Test(priority = 2, dependsOnMethods = "registerUser")
     public void loginUser(ITestContext testContext) {
         log.info("************ Login User ************");
@@ -61,6 +85,11 @@ public class UserTest {
         log.info("************ Login Success ************");
     }
 
+    /**
+     * Gets user details.
+     *
+     * @param testContext the test context
+     */
     @Test(priority = 3, dependsOnMethods = "loginUser")
     public void getUserDetails(ITestContext testContext) {
         log.info("************ Getting User Details ************");
@@ -73,7 +102,12 @@ public class UserTest {
 
     }
 
-   @Test(priority = 4, dependsOnMethods = "loginUser")
+    /**
+     * Update user details.
+     *
+     * @param testContext the test context
+     */
+    @Test(priority = 4, dependsOnMethods = "loginUser")
     public void updateUserDetails(ITestContext testContext) {
         log.info("************ Updating User Details ************");
         String updatedEmailAddress = faker.internet().emailAddress();
@@ -87,7 +121,12 @@ public class UserTest {
         log.info("************ User Details Updated************");
     }
 
-   // @Test(priority = 5, dependsOnMethods = "loginUser")
+    /**
+     * Delete user details.
+     *
+     * @param testContext the test context
+     */
+// @Test(priority = 5, dependsOnMethods = "loginUser")
     public void deleteUserDetails(ITestContext testContext) {
         log.info("************ Deleting User Details ************");
         Response response = UserEndpoints.deleteUser(testContext.getSuite().getAttribute("accessToken").toString());
