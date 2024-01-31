@@ -1,0 +1,21 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Hotel Booking Test Suite">
+    <listeners>
+        <listener class-name="com.test.booking.api.utils.ExtentReportManager" />
+    </listeners>
+    <test name="User Tests">
+        <classes>
+            <class name="com.test.booking.api.test.UserTest" />
+        </classes>
+    </test>
+    <test name="Hotel Tests">
+        <classes>
+            <class name="com.test.booking.api.test.HotelTest" />
+        </classes>
+    </test>
+    <test name="Booking Tests">
+        <classes>
+            <class name="com.test.booking.api.test.BookingTest" />
+        </classes>
+    </test>
+</suite>
