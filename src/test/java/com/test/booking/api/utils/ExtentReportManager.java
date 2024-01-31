@@ -14,13 +14,16 @@ import org.testng.ITestResult;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * The type Extent report manager.
+ */
 public class ExtentReportManager implements ITestListener {
 
     private static ExtentReports extent;
-    private ExtentSparkReporter extentSparkReporter;
+
     private ExtentTest test;
-    private static ThreadLocal<ExtentTest> extentTest = new ThreadLocal<>();
-    private String repName;
+    private static final ThreadLocal<ExtentTest> extentTest = new ThreadLocal<>();
+
 
 //    public static ExtentReports getInstance() {
 //        if (extent == null) {
@@ -36,12 +39,22 @@ public class ExtentReportManager implements ITestListener {
 //        return extent;
 //    }
 
+    /**
+     * On test start.
+     *
+     * @param result the result
+     */
     @Override
     public void onTestStart(ITestResult result) {
         ExtentTest test = extent.createTest(result.getMethod().getMethodName());
         extentTest.set(test);
     }
 
+    /**
+     * On test success.
+     *
+     * @param result the result
+     */
     @Override
     public void onTestSuccess(ITestResult result) {
         test = extent.createTest(result.getName());
@@ -50,6 +63,11 @@ public class ExtentReportManager implements ITestListener {
         test.log(Status.PASS, MarkupHelper.createLabel(result.getName() + " - Test Case Passed", ExtentColor.GREEN));
     }
 
+    /**
+     * On test failure.
+     *
+     * @param result the result
+     */
     @Override
     public void onTestFailure(ITestResult result) {
         test = extent.createTest(result.getName());
@@ -59,6 +77,11 @@ public class ExtentReportManager implements ITestListener {
         test.fail(result.getThrowable());
     }
 
+    /**
+     * On test skipped.
+     *
+     * @param result the result
+     */
     @Override
     public void onTestSkipped(ITestResult result) {
         test = extent.createTest(result.getName());
@@ -68,16 +91,26 @@ public class ExtentReportManager implements ITestListener {
         test.skip(result.getThrowable());
     }
 
+    /**
+     * On test failed but within success percentage.
+     *
+     * @param result the result
+     */
     @Override
     public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
         // Do nothing for now
     }
 
+    /**
+     * On start.
+     *
+     * @param context the context
+     */
     @Override
     public void onStart(ITestContext context) {
         String timestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
-        repName = "Test-Report-" + timestamp + ".html";
-        extentSparkReporter = new ExtentSparkReporter(".\\reports" + repName);
+        String repName = "Test-Report-" + timestamp + ".html";
+        ExtentSparkReporter extentSparkReporter; = new ExtentSparkReporter(".\\reports" + repName);
         extentSparkReporter.config().setDocumentTitle("RestAssuredAutomation");
         extentSparkReporter.config().setReportName("Hotel Booking User Api");
         extentSparkReporter.config().setTheme(Theme.STANDARD);
@@ -89,6 +122,11 @@ public class ExtentReportManager implements ITestListener {
         extent.setSystemInfo("User", System.getProperty("Saurav Verma"));
     }
 
+    /**
+     * On finish.
+     *
+     * @param context the context
+     */
     @Override
     public void onFinish(ITestContext context) {
         extent.flush();

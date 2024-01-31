@@ -1,7 +1,17 @@
 package com.test.booking.api.model;
 
+/**
+ * The enum Room type.
+ */
 public enum RoomType {
-    SINGLE, DOUBLE;
+    /**
+     * Single room type.
+     */
+    SINGLE,
+    /**
+     * Double room type.
+     */
+    DOUBLE;
 
     RoomType() {
     }
