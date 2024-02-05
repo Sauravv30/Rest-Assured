@@ -21,7 +21,7 @@ public class UserTest {
      * The Log.
      */
     Logger log = LogManager.getLogger(UserTest.class);
-    private final UserModel userRequest;
+    private  UserModel userRequest;
     private final Faker faker = new Faker();
 
     /**
