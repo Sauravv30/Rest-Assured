@@ -110,7 +110,7 @@ public class ExtentReportManager implements ITestListener {
     public void onStart(ITestContext context) {
         String timestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
         String repName = "Test-Report-" + timestamp + ".html";
-        ExtentSparkReporter extentSparkReporter; = new ExtentSparkReporter(".\\reports" + repName);
+        ExtentSparkReporter extentSparkReporter = new ExtentSparkReporter(".\\reports" + repName);
         extentSparkReporter.config().setDocumentTitle("RestAssuredAutomation");
         extentSparkReporter.config().setReportName("Hotel Booking User Api");
         extentSparkReporter.config().setTheme(Theme.STANDARD);
